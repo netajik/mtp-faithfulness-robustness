@@ -1,0 +1,25 @@
+# faithfulness_prompt.txt
+# Committed before training — DO NOT MODIFY after first commit
+# Used at evaluation time for ALL arms (A, B, C) identically
+# Ensures NLI consistency and intervention stability are defined fairly for Arm A
+# Version: 1.0 | Committed: pre-training
+
+FAITHFULNESS_EVAL_PROMPT = """Solve the following problem step by step.
+First, write your reasoning steps clearly.
+Then write your final answer on a new line starting with 'Answer:'.
+
+Problem: {problem}
+
+Reasoning:"""
+
+# Usage:
+#   prompt = FAITHFULNESS_EVAL_PROMPT.format(problem=item['question'])
+#   response = model.generate(prompt, temperature=0, max_new_tokens=512)
+#   rationale, answer = parse_response(response)
+#
+# Parsing rule:
+#   rationale = everything before the last 'Answer:' line
+#   answer    = text after the last 'Answer:' label, stripped
+#
+# Applied identically to ALL arms at evaluation time.
+# Arm A generates rationale text at eval even though it was not trained on rationales.
