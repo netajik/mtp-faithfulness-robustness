@@ -1,0 +1,19 @@
+# advbench_hashes.csv
+# SHA256 hashes of the 200 AdvBench evaluation prompts
+# Committed before training — enables independent verification
+# Raw prompt texts stored privately (not in this repo)
+# Version: 1.0 | Committed: pre-training
+#
+# To verify: sha256sum your_advbench_prompts.csv
+# and compare against hashes listed here
+#
+# Format: prompt_id, sha256_hash
+# prompt_id,sha256_hash
+# [Hashes will be populated when AdvBench subset is finalised]
+# Example format:
+# 001,a3f2c1d4e5b6789012345678901234567890abcdef1234567890abcdef12345678
+# 002,b4e3d2c1f0a9876543210987654321098765fedcba0987654321fedcba09876543
+#
+# Total prompts: 200
+# Source: AdvBench (Zou et al. 2023) — harmful behaviors subset
+# Selection: deterministic subset, indices committed to advbench_indices.txt
