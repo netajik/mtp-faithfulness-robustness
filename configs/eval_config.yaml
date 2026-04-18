@@ -1,0 +1,23 @@
+# eval_config.yaml
+# Commit 8 — written after pilot, locked before training
+# DO NOT MODIFY after this commit
+# Locked: 2026-04-18 11:59
+
+model:
+  name: "Llama-3.2-3B-Instruct"
+  path: "/content/drive/MyDrive/mtp_project/models/Llama-3.2-3B-Instruct"
+  family: "Llama3"
+  scale: "3B"
+  pilot_refusal_rate: 52.0
+  extension_7b_candidate: "meta-llama/Llama-3.1-8B-Instruct"
+
+pilot:
+  num_prompts: 50
+  selection_rule: "20% <= refusal_rate <= 80%"
+  result: "IN RANGE"
+  date: "2026-04-18"
+  reason: "Selected for publication comparison with Llama-family papers (Lobo 2025, FRODO, FRIT, RATIONAL)"
+
+seeds: [42, 123, 456]
+arms: [A, B, C]
+total_checkpoints: 9
