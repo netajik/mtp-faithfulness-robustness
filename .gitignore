@@ -1,3 +1,31 @@
+# Secrets — never commit
+.env
+*.env
+
+# Model weights — stored on Drive only
+*.safetensors
+*.bin
+*.pt
+*.pth
+checkpoints/
+
+# Raw harmful prompts — SHA256 hashes committed instead
+eval/private/
+
+# Large cache files
+cache/
+*.jsonl.gz
+*.csv.gz
+
+# Colab
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
