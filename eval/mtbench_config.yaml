@@ -1,0 +1,78 @@
+# mtbench_config.yaml
+# Committed before training — DO NOT MODIFY after first commit
+# MT-Bench helpfulness evaluation configuration
+# Version: 1.1 | Updated: 2026-04-18
+# gpt-4-0125-preview was shut down March 26 2026 — replaced with gpt-5.2-2025-12-11
+# Verified available: confirmed in API model list on 2026-04-18
+
+scorer:
+  model: "gpt-5.2-2025-12-11"          # pinned dated snapshot — do not use floating alias
+  temperature: 0.0
+  max_tokens: 1024
+
+# ── Deprecation handling ─────────────────────────────────────────────────────
+# If gpt-5.2-2025-12-11 is deprecated before evaluation completes:
+#
+# Step 1: Check available models via API:
+#   from openai import OpenAI
+#   client = OpenAI()
+#   models = [m.id for m in client.models.list().data if 'gpt-5' in m.id]
+#   print(sorted(models))
+#
+# Step 2: Select replacement using this priority order:
+#   Priority 1 — gpt-5.2-2025-12-11        (primary, pinned)
+#   Priority 2 — gpt-5.2-chat-latest        (same family, auto-updated)
+#   Priority 3 — gpt-5.1-2025-11-13        (previous stable snapshot)
+#   Priority 4 — gpt-5-2025-08-07           (base GPT-5 stable)
+#   Priority 5 — gpt-4.1-2025-04-14        (fallback if GPT-5 unavailable)
+#
+# Step 3: Document the change in replacement_log below
+# Step 4: Re-run ONLY the affected checkpoints with the new model
+# Step 5: Report both scorer versions in results — flag any mixed-scorer arms
+#
+# CRITICAL: Never switch silently — all scorer changes must be logged here
+
+replacement_log:
+  # Format: { date, old_model, new_model, reason, affected_arms }
+  # - date: "2026-04-18"
+  #   old_model: "gpt-4-0125-preview"
+  #   new_model: "gpt-5.2-2025-12-11"
+  #   reason: "gpt-4-0125-preview shut down March 26 2026 by OpenAI"
+  #   affected_arms: "pre-training config update — no arms affected yet"
+
+evaluation:
+  num_prompts: 80
+  num_categories: 8
+  categories:
+    - writing
+    - roleplay
+    - reasoning
+    - math
+    - coding
+    - extraction
+    - stem
+    - humanities
+  temperature: 0.0                      # model response generation — fixed
+  max_new_tokens: 1024
+  batch_size: 1
+  decoding: greedy                      # temperature=0, no sampling
+
+scoring:
+  scale: [1, 10]
+  metric: mean_score_per_arm_per_seed
+  report_per_seed: true
+  report_arm_summary: true             # mean ± std across 3 seeds
+
+cost_estimate:
+  calls: 720                           # 80 prompts × 9 checkpoints
+  approx_input_tokens_per_call: 800
+  approx_output_tokens_per_call: 200
+  approx_total_cost_usd: "3-6"        # estimate at gpt-5.2 rates
+
+notes: >
+  MT-Bench runs on all 9 checkpoints (3 arms x 3 seeds).
+  No additional training required.
+  Enables direct comparison with RATIONAL (Y. Zhang et al. 2025)
+  which studies the robustness-helpfulness tradeoff.
+  Scorer model pinned to dated snapshot for reproducibility.
+  Do not use floating aliases (gpt-5.2-chat-latest) — behavior can change.
